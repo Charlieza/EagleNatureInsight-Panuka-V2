@@ -1,0 +1,16 @@
+# Runtime (core)
+streamlit>=1.36.0
+pandas>=2.0
+plotly>=5.20
+folium>=0.17
+streamlit-folium>=0.22
+reportlab>=4.1           # PDF export (pure Python, no native deps)
+openpyxl>=3.1            # Excel export
+matplotlib>=3.8          # used for fallback chart rendering in some paths
+
+# Optional live-data stack (required only for live Earth Engine mode)
+earthengine-api>=0.1.400
+requests>=2.31
+
+# Dev / test (optional)
+# pytest>=8.0
