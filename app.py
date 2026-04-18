@@ -97,6 +97,12 @@ for k, v in _DEFAULTS.items():
 # ---------------------------------------------------------------------------
 # Sidebar — identity, navigation, tier, settings
 # ---------------------------------------------------------------------------
+# Programmatic navigation pattern: views set st.session_state["_goto"] and
+# st.rerun(). Here, BEFORE the radio widget instantiates, we move the
+# pending value into the widget-owned key so Streamlit accepts it.
+if "_goto" in st.session_state:
+    st.session_state["nav"] = st.session_state.pop("_goto")
+
 with st.sidebar:
     st.markdown(
         f"""
@@ -305,7 +311,7 @@ def view_locate():
     st.divider()
     if st.button("Next → Evaluate", type="primary"):
         st.session_state["leap_phase"] = "E"
-        st.session_state["nav"] = "🔎 Evaluate"
+        st.session_state["_goto"] = "🔎 Evaluate"
         st.rerun()
 
 
@@ -389,11 +395,11 @@ def view_evaluate():
     col_back, col_next = st.columns(2)
     with col_back:
         if st.button("← Back to Locate"):
-            st.session_state["nav"] = "📍 Locate"
+            st.session_state["_goto"] = "📍 Locate"
             st.rerun()
     with col_next:
         if st.button("Next → Assess", type="primary"):
-            st.session_state["nav"] = "⚖️ Assess"
+            st.session_state["_goto"] = "⚖️ Assess"
             st.rerun()
 
 
@@ -475,11 +481,11 @@ def view_assess():
     col_back, col_next = st.columns(2)
     with col_back:
         if st.button("← Back to Evaluate"):
-            st.session_state["nav"] = "🔎 Evaluate"
+            st.session_state["_goto"] = "🔎 Evaluate"
             st.rerun()
     with col_next:
         if st.button("Next → Prepare", type="primary"):
-            st.session_state["nav"] = "📋 Prepare"
+            st.session_state["_goto"] = "📋 Prepare"
             st.rerun()
 
 
